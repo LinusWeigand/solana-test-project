@@ -5,7 +5,8 @@ const { SystemProgram } = anchor.web3;
 const main = async () => {
   console.log("🚀 Starting test...")
 
-  anchor.setProvider(anchor.AnchorProvider.env());
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
   const program = anchor.workspace.Myepicproject;
 
   // Create a account keypair for out program to use.
@@ -26,6 +27,18 @@ const main = async () => {
   // Fetch data form the account
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString());
+
+  // Call add_gif.
+  await program.rpc.addGif({
+    accounts: {
+      baseAccount: baseAccount.publicKey,
+    },
+  });
+
+  // Get the account again to see what changed.
+  account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  console.log('👀 GIF Count', account.totalGifs.toString());
+
 }
 
 const runMain = async () => {
