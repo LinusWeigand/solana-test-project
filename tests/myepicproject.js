@@ -39,6 +39,9 @@ const main = async () => {
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString());
 
+  // Access gif_list on the account
+  console.log('👀 GIF List', account.gifList);
+
 }
 
 const runMain = async () => {
